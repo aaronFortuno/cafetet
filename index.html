@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ln-tip-jar — Demo</title>
+  <style>
+    /* ── Reset mínim ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Pàgina demo ─────────────────────────────────────────────────── */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #0f0f0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Capçalera */
+    header {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    header .logo {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    header .badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      border: 1px solid #F7931A;
+      color: #F7931A;
+      letter-spacing: 0.03em;
+      font-weight: 500;
+    }
+
+    /* Contingut principal */
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 32px 200px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #F7931A;
+      margin-bottom: 16px;
+    }
+
+    h2.hero-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    h2.hero-title span {
+      color: #F7931A;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      margin-bottom: 48px;
+    }
+
+    /* Targetes de característiques */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 56px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    .feature-card .icon {
+      font-size: 22px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .feature-card p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.5;
+    }
+
+    /* Bloc de codi */
+    .code-section h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 12px;
+    }
+
+    pre {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid #F7931A;
+      border-radius: 8px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 13px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 32px;
+    }
+
+    pre .attr  { color: #79c0ff; }
+    pre .value { color: #a5d6ff; }
+    pre .tag   { color: #7ee787; }
+    pre .comm  { color: rgba(255,255,255,0.3); font-style: italic; }
+
+    /* Separador */
+    hr {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      margin: 48px 0;
+    }
+
+    .footer-note {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer-note a { color: rgba(255,255,255,0.4); }
+
+    /* Avís cantonada esquerra */
+    .demo-hint {
+      position: fixed;
+      bottom: 88px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(247, 147, 26, 0.12);
+      border: 1px solid rgba(247, 147, 26, 0.3);
+      color: #F7931A;
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      pointer-events: none;
+      animation: fadeHint 0.5s ease 1s both, fadeOut 0.5s ease 5s both;
+      white-space: nowrap;
+    }
+
+    @keyframes fadeHint {
+      from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to   { opacity: 0; pointer-events: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Capçalera ───────────────────────────────────────────────────────── -->
+  <header>
+    <span class="logo">⚡</span>
+    <h1>ln-tip-jar</h1>
+    <span class="badge">Web Component</span>
+  </header>
+
+  <!-- ── Contingut principal ─────────────────────────────────────────────── -->
+  <main>
+
+    <span class="hero-tag">Demo interactiva</span>
+
+    <h2 class="hero-title">
+      Microdonatius via<br>
+      <span>Lightning Network</span>
+    </h2>
+
+    <p class="hero-desc">
+      Widget lleuger i reutilitzable per acceptar propines en Bitcoin/Lightning.
+      Funciona en qualsevol projecte web sense frameworks ni dependències.
+      Mira la cantonada inferior dreta 👉
+    </p>
+
+    <!-- Característiques -->
+    <div class="features">
+      <div class="feature-card">
+        <span class="icon">🧩</span>
+        <h3>Web Component natiu</h3>
+        <p>Shadow DOM, sense frameworks. Funciona en HTML, React, Vue o qualsevol entorn.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🔒</span>
+        <h3>CSS encapsulat</h3>
+        <p>Els estils no interfereixen mai amb el projecte hoste gràcies al Shadow DOM.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">⚡</span>
+        <h3>QR lazy load</h3>
+        <p>La llibreria QR s'carrega des de CDN només quan l'usuari obre el modal per primera vegada.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">♿</span>
+        <h3>Accessible</h3>
+        <p>ARIA labels, gestió de focus, tancament amb Escape i navegació per teclat.</p>
+      </div>
+    </div>
+
+    <!-- Codi d'exemple -->
+    <div class="code-section">
+      <h3>Com usar-lo</h3>
+      <pre><span class="comm">&lt;!-- 1. Carrega el component --&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="value">"ln-tip-jar.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+
+<span class="comm">&lt;!-- 2. Incrusta-ho on vulguis --&gt;</span>
+<span class="tag">&lt;ln-tip-jar</span>
+  <span class="attr">ln-address</span>=<span class="value">"elteunom@walletofsatoshi.com"</span>
+  <span class="attr">portfolio-url</span>=<span class="value">"https://elteudomini.com"</span>
+  <span class="attr">portfolio-label</span>=<span class="value">"Veure més projectes"</span>
+  <span class="attr">hover-text</span>=<span class="value">"Em convides a un cafè? 😊"</span>
+  <span class="attr">button-position</span>=<span class="value">"right"</span>
+<span class="tag">&gt;&lt;/ln-tip-jar&gt;</span></pre>
+    </div>
+
+    <hr />
+
+    <p class="footer-note">
+      Fet amb ❤️ i ⚡ · Sense intermediaris, sense comissions ·
+      <a href="https://lightningnetwork.plus" target="_blank" rel="noopener">Què és Lightning Network?</a>
+    </p>
+
+  </main>
+
+  <!-- Pista visual inicial -->
+  <div class="demo-hint" aria-hidden="true">☕ Fes clic al botó per provar-ho!</div>
+
+  <!-- ── El component ─────────────────────────────────────────────────────── -->
+  <script src="ln-tip-jar.js"></script>
+
+  <ln-tip-jar
+    ln-address="elteunom@walletofsatoshi.com"
+    portfolio-url="https://elteudomini.com"
+    portfolio-label="Veure més projectes"
+    hover-text="Em convides a un cafè? 😊"
+    button-position="left"
+  ></ln-tip-jar>
+
+</body>
+</html>
